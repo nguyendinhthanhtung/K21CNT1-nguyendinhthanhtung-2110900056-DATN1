@@ -36,9 +36,11 @@
       text-decoration: none;
     }
     .avatar {
+      width: 30px;
       height: 30px;
       border-radius: 50%;
       margin-right: 5px;
+      object-fit: cover;
     }
     /* Dropdown style */
     .dropdown-menu {
@@ -114,7 +116,7 @@ text-decoration: none;
   <!-- Dropdown khi đã đăng nhập -->
   <div th:if="${session.userEmail != null}" class="dropdown">
     <a href="#" class="nav-link dropdown-toggle" id="dropdownMenuButton">
-      <img src="https://i.pinimg.com/736x/8f/1c/a2/8f1ca2029e2efceebd22fa05cca423d7.jpg" alt="Avatar" class="avatar">
+      <img th:src="@{/image/user/{id}(id = ${session.userId})}" alt="Avatar" class="avatar">
       <span class="username" th:text="${session.userEmail}">Tài Khoản</span>
     </a>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">

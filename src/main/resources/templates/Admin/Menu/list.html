@@ -47,13 +47,13 @@
         <a href="/admin/thuc-don/add" class="btn btn-success">Thêm món ăn</a>
         <div class="table-responsive">
             <div class="mb-3">
-                <input type="text" name="name" class="form-control" placeholder="Tìm kiếm món ăn" th:value="${param.name}" />
+                <input type="text" name="name" class="form-control" placeholder="Tên món ăn" th:value="${param.name}" />
             </div>
             <div class="mb-3">
-                <input type="number" name="minPrice" class="form-control" placeholder="Tìm kiếm món ăn" th:value="${param.minPrice}" />
+                <input type="number" name="minPrice" class="form-control" placeholder="Giá nhỏ nhất" th:value="${param.minPrice}" />
             </div>
             <div class="mb-3">
-                <input type="number" name="maxPrice" class="form-control" placeholder="Tìm kiếm món ăn" th:value="${param.maxPrice}" />
+                <input type="number" name="maxPrice" class="form-control" placeholder="Giá lớn nhất" th:value="${param.maxPrice}" />
             </div>
             <div class="mb-3">
                 <input type="date" name="startDate" class="form-control" placeholder="Ngày bắt đầu" th:value="${paramStartDate}" />
@@ -85,8 +85,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="menu : ${menus}">
-            <td th:text="${menu.id}"></td>
+        <tr th:each="menu , index : ${menus}">
+            <td th:text="${index.count}"></td>
             <td th:text="${menu.name}"></td>
             <td th:text="${menu.price}"></td>
             <td th:text="${menu.categoryId.name}"></td>
@@ -106,17 +106,17 @@
         <ul class="pagination">
             <th:block th:if="${totalPages > 1}">
                 <li class="page-item">
-                    <a class="page-link" th:href="@{/thuc-don/list(page=${currentPage > 0 ? currentPage - 1 : 0})}">Trang trước</a>
+                    <a class="page-link" th:href="@{/admin/thuc-don/list(page=${currentPage > 0 ? currentPage - 1 : 0})}">Trang trước</a>
                 </li>
             </th:block>
 
             <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}" class="page-item" th:classappend="${i == currentPage} ? 'active' : ''">
-                <a class="page-link" th:href="@{/thuc-don/list(page=${i}, name=${param.name}, categoryId=${param.categoryId})}" th:text="${i + 1}"></a>
+                <a class="page-link" th:href="@{/admin/thuc-don/list(page=${i}, name=${param.name}, categoryId=${param.categoryId})}" th:text="${i + 1}"></a>
             </li>
 
             <th:block th:if="${currentPage + 1 < totalPages}">
                 <li class="page-item">
-                    <a class="page-link" th:href="@{/thuc-don/list(page=${currentPage + 1})}">Trang sau</a>
+                    <a class="page-link" th:href="@{/admin/thuc-don/list(page=${currentPage + 1})}">Trang sau</a>
                 </li>
             </th:block>
         </ul>

@@ -63,8 +63,11 @@
   <!--      <button type="submit" class="btn btn-danger"><i class="fa-solid fa-filter"></i> Lọc</button>-->
   <!--    </div>-->
   <!--  </form>-->
+  <div th:if="${orderFoodEntities.size() ==0}">
 
-  <table class="table table-bordered mt-3">
+    <h2>Không có món ăn nào</h2>
+  </div>
+  <table class="table table-bordered mt-3" th:if="${orderFoodEntities.size() !=0}">
     <thead>
     <tr>
       <th>ID</th>

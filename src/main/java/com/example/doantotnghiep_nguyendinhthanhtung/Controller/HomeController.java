@@ -2,9 +2,7 @@ package com.example.doantotnghiep_nguyendinhthanhtung.Controller;
 
 import com.example.doantotnghiep_nguyendinhthanhtung.Entity.MenuEntity;
 import com.example.doantotnghiep_nguyendinhthanhtung.Entity.ReviewsEntity;
-import com.example.doantotnghiep_nguyendinhthanhtung.Repository.CategoryRepository;
-import com.example.doantotnghiep_nguyendinhthanhtung.Repository.MenuRepository;
-import com.example.doantotnghiep_nguyendinhthanhtung.Repository.ReviewRepository;
+import com.example.doantotnghiep_nguyendinhthanhtung.Repository.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -28,15 +26,21 @@ public class HomeController {
     private final MenuRepository menuRepository;
     private final CategoryRepository categoryRepository;
     private final ReviewRepository reviewRepository;
+    private final UserRepository userRepository;
+    private final ReservationRepository reservationRepository;
+    private final OrderRepository orderRepository;
     /**
      * Constructor để khởi tạo controller với một repository để thao tác với dữ liệu thực đơn (menu).
      *
      * @param menuRepository Đối tượng giúp truy vấn dữ liệu thực đơn từ cơ sở dữ liệu.
      */
-    public HomeController(MenuRepository menuRepository, CategoryRepository categoryRepository, ReviewRepository reviewRepository) {
+    public HomeController(MenuRepository menuRepository, CategoryRepository categoryRepository, ReviewRepository reviewRepository, UserRepository userRepository, ReservationRepository reservationRepository, OrderRepository orderRepository) {
         this.menuRepository = menuRepository;
         this.categoryRepository = categoryRepository;
         this.reviewRepository = reviewRepository;
+        this.userRepository = userRepository;
+        this.reservationRepository = reservationRepository;
+        this.orderRepository = orderRepository;
     }
 
     /**
@@ -97,7 +101,11 @@ public class HomeController {
      * @return Trả về trang "Admin/AdminHome.html".
      */
     @GetMapping("/admin")
-    public String admin() {
+    public String admin(Model model) {
+        model.addAttribute("userCount", (int) userRepository.count());
+        model.addAttribute("menuCount", (int) menuRepository.count());
+        model.addAttribute("bookingCount", (int) reservationRepository.count());
+        model.addAttribute("orderCount", (int) orderRepository.count());
         return "Admin/AdminHome";
     }
     @GetMapping("/thuc-don/{id}")

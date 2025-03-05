@@ -164,6 +164,11 @@ public class MenuController {
             }
 
             menu.setId(id);
+            if (existingMenu.getCreatedAt() == null){
+                menu.setCreatedAt(existingMenu.getCreatedAt());
+            }else {
+                menu.setCreatedAt(Timestamp.from(Instant.now()));
+            }
             menu.setCreatedAt(existingMenu.getCreatedAt());
             menu.setCategoryId(categoryEntity.orElseThrow());
             menu.setUpdatedAt(Timestamp.from(Instant.now()));

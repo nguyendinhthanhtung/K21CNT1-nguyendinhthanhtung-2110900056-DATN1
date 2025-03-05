@@ -60,7 +60,7 @@ public class ReservationController {
             ReservationsEntity reservations = reservationRepository.findById(id).get();
             reservations.setStatus(reservationsEntity.getStatus());
             reservationRepository.save(reservations);
-            return "redirect:/admin/dan-ban/list";
+            return "redirect:/admin/dan-ban";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "Admin/Reservations/edit";

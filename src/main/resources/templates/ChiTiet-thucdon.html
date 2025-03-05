@@ -93,7 +93,7 @@
                 <span th:text="${menu.categoryId.name}">Tên loại</span>
             </p>
             <div class="order-button">
-                <form th:action="@{/order/{id}(id=${menu.id})}" method="post">
+                <form th:action="@{/user/dat-mon/order/{id}(id=${menu.id})}" method="post">
                     <button type="submit">
                         <i class="fa-solid fa-cart-shopping"></i> Mua ngay
                     </button>
@@ -101,16 +101,31 @@
             </div>
         </div>
     </div>
-
+    <!-- Comment Section -->
     <div class="comment-section">
-        <h4>Đánh giá khách hàng</h4>
-        <form class="comment-form" th:action="@{/comment/new}" method="post">
+        <h4>Bình luận</h4>
+        <!-- Form gửi bình luận -->
+        <form class="comment-form" th:action="@{/user/comment/new}" method="post">
+            <!-- Input ẩn chứa ID món ăn -->
             <input type="hidden" name="menuId.id" th:value="${menu.id}"/>
             <div class="mb-3">
-                <textarea class="form-control" name="content" rows="3" placeholder="Nhập đánh giá của bạn..." required></textarea>
+                <textarea class="form-control" name="content" rows="3" placeholder="Nhập bình luận của bạn..." required></textarea>
             </div>
-            <button type="submit" class="btn btn-danger">
-                <i class="fas fa-paper-plane"></i> Gửi đánh giá
+            <!-- Phần đánh giá sao -->
+            <div class="mb-3">
+                <label>Đánh giá: </label>
+                <div id="starRating">
+                    <i class="fa-regular fa-star star" data-value="1"></i>
+                    <i class="fa-regular fa-star star" data-value="2"></i>
+                    <i class="fa-regular fa-star star" data-value="3"></i>
+                    <i class="fa-regular fa-star star" data-value="4"></i>
+                    <i class="fa-regular fa-star star" data-value="5"></i>
+                </div>
+                <!-- Input ẩn lưu giá trị đánh giá -->
+                <input type="hidden" name="rating" id="rating" value="0"/>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Gửi bình luận
             </button>
         </form>
         <hr/>
@@ -135,7 +150,24 @@
 
 <!-- Include Footer -->
 <th:block th:replace="Layout/Footer"></th:block>
+<!-- Bootstrap JS Bundle (bao gồm Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#starRating .star').on('click', function () {
+            var rating = $(this).data('value');
+            $('#rating').val(rating);
+            $('#starRating .star').each(function () {
+                if ($(this).data('value') <= rating) {
+                    $(this).removeClass('fa-regular').addClass('fa-solid selected');
+                } else {
+                    $(this).removeClass('fa-solid selected').addClass('fa-regular');
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
